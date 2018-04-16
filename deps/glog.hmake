@@ -1,0 +1,23 @@
+---
+format: hypermake.v0
+
+targets:
+  get-glog:
+    description: download glog library
+    after:
+      - toolchain
+    cmds:
+      - unpack-url.sh glog https://github.com/google/glog/archive/v0.3.5.tar.gz
+
+  build-dep-glog-[arch:amd64,armhf]:
+    description: build glog library
+    after:
+      - build-dep-gflags-$[arch]
+      - get-glog
+    watches:
+      - functions.sh
+      - glog.build.sh
+    env:
+      - MAKE_OPTS
+    cmds:
+      - ./glog.build.sh $[arch]

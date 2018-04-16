@@ -1,0 +1,22 @@
+---
+format: hypermake.v0
+
+targets:
+  get-ncsdk:
+    description: download Movidius NCSDK
+    after:
+      - toolchain
+    cmds:
+      - unpack-url.sh ncsdk https://software.intel.com/sites/default/files/managed/33/1b/NCSDK-1.12.00.01.tar.gz
+
+  build-dep-ncsdk-[arch:amd64,armhf]:
+    description: build ncsdk library
+    after:
+      - get-ncsdk
+    watches:
+      - functions.sh
+      - ncsdk.build.sh
+    env:
+      - MAKE_OPTS
+    cmds:
+      - ./ncsdk.build.sh $[arch]

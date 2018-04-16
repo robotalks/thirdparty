@@ -1,0 +1,22 @@
+---
+format: hypermake.v0
+
+targets:
+  get-ffmpeg:
+    description: download ffmpeg library
+    after:
+      - toolchain
+    cmds:
+      - unpack-url.sh ffmpeg https://ffmpeg.org/releases/ffmpeg-3.1.2.tar.xz
+
+  build-dep-ffmpeg-[arch:amd64,armhf]:
+    description: build ffmpeg library
+    after:
+      - get-ffmpeg
+    watches:
+      - functions.sh
+      - ffmpeg.build.sh
+    env:
+      - MAKE_OPTS
+    cmds:
+      - ./ffmpeg.build.sh $[arch]

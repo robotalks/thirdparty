@@ -1,0 +1,30 @@
+---
+format: hypermake.v0
+
+name: thirdparty
+description: Third-party dependencies
+
+targets:
+  toolchain:
+    description: stub for custom toolchain
+
+  exec:
+    description: environment for hmake -x
+    after:
+      - toolchain
+
+  build-deps:
+    description: build components
+    after:
+      - 'build-dep-*'
+
+includes:
+  - '**/**/*.hmake'
+
+settings:
+  default-targets:
+    - build-deps
+  exec-target: exec
+  exec-shell: /bin/bash
+  docker:
+    image: robotalks/toolchain:stretch-0

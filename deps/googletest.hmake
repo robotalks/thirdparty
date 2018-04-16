@@ -1,0 +1,22 @@
+---
+format: hypermake.v0
+
+targets:
+  get-googletest:
+    description: download googletest
+    after:
+      - toolchain
+    cmds:
+      - unpack-url.sh googletest https://github.com/google/googletest/archive/release-1.8.0.tar.gz
+
+  build-dep-googletest-[arch:amd64,armhf]:
+    description: build googletest
+    after:
+      - get-googletest
+    watches:
+      - functions.sh
+      - googletest.build.sh
+    env:
+      - MAKE_OPTS
+    cmds:
+      - ./googletest.build.sh $[arch]

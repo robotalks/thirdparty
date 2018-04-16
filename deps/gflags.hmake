@@ -1,0 +1,22 @@
+---
+format: hypermake.v0
+
+targets:
+  get-gflags:
+    description: download gflags library
+    after:
+      - toolchain
+    cmds:
+      - unpack-url.sh gflags https://github.com/gflags/gflags/archive/v2.2.1.tar.gz
+
+  build-dep-gflags-[arch:amd64,armhf]:
+    description: build gflags library
+    after:
+      - get-gflags
+    watches:
+      - functions.sh
+      - gflags.build.sh
+    env:
+      - MAKE_OPTS
+    cmds:
+      - ./gflags.build.sh $[arch]
