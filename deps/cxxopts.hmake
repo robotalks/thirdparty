@@ -1,0 +1,13 @@
+---
+format: hypermake.v0
+
+targets:
+  build-dep-cxxopts:
+    description: build github.com/jarro2783/cxxopts
+    watches:
+      - functions.sh
+      - cxxopts.build.sh
+    cmds:
+      - ./cxxopts.build.sh noarch
+    artifacts:
+      - /out/noarch/include/cxxopts.hpp

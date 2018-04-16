@@ -1,0 +1,23 @@
+---
+format: hypermake.v0
+
+targets:
+  get-cpp-netlib:
+    description: download cpp-netlib library
+    after:
+      - toolchain
+    cmds:
+      - unpack-url.sh cpp-netlib http://downloads.cpp-netlib.org/0.12.0/cpp-netlib-0.12.0-final.tar.bz2
+
+  build-dep-cpp-netlib-[arch:amd64,armhf]:
+    description: build cpp-netlib library
+    after:
+      - get-cpp-netlib
+      - build-dep-boost-$[arch]
+    watches:
+      - functions.sh
+      - cpp-netlib.build.sh
+    env:
+      - MAKE_OPTS
+    cmds:
+      - ./cpp-netlib.build.sh $[arch]

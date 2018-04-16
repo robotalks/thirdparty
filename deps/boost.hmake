@@ -1,0 +1,24 @@
+---
+format: hypermake.v0
+
+targets:
+  get-boost:
+    description: download boost library
+    after:
+      - toolchain
+    cmds:
+      - unpack-url.sh boost https://sourceforge.net/projects/boost/files/boost/1.67.0/boost_1_67_0.tar.bz2
+
+  build-dep-boost-[arch:amd64,armhf]:
+    description: build boost library
+    after:
+      - get-boost
+      - build-dep-zlib-$[arch]
+      - build-dep-bzip2-$[arch]
+    watches:
+      - functions.sh
+      - boost.build.sh
+    env:
+      - B2_OPTS
+    cmds:
+      - ./boost.build.sh $[arch]

@@ -14,6 +14,7 @@ targets:
     after:
       - get-zlib
     watches:
+      - functions.sh
       - zlib.build.sh
     env:
       - MAKE_OPTS

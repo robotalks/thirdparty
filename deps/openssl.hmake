@@ -15,6 +15,7 @@ targets:
       - get-openssl
       - build-dep-zlib-$[arch]
     watches:
+      - functions.sh
       - openssl.build.sh
     env:
       - MAKE_OPTS
