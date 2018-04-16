@@ -10,12 +10,12 @@ if [ "$ARCH" == "armhf" ]; then
     CMAKE_OPTS="$CMAKE_OPTS -DCMAKE_TOOLCHAIN_FILE=$SRC_DIR/platforms/linux/arm-gnueabi.toolchain.cmake"
 fi
 
-clean_copy_src
-
-patch -p1 < $DEP_DIR/opencv.patch
-patch -p1 < $DEP_DIR/opencv-arm-tbb.patch
+clean_mkdir
 
 export PKG_CONFIG_PATH=$OUT_DIR/lib/pkgconfig
+export PKG_CONFIG_LIBDIR=$PKG_CONFIG_PATH
+export CPATH=$OUT_DIR/include
+export LIBRARY_PATH=$OUT_DIR/lib
 cmake $CMAKE_OPTS \
     -DCMAKE_BUILD_TYPE=Release \
     -DBUILD_SHARED_LIBS=OFF \
@@ -26,15 +26,13 @@ cmake $CMAKE_OPTS \
     -DBUILD_JPEG=ON \
     -DBUILD_PNG=ON \
     -DBUILD_TIFF=ON \
-    -DBUILD_ZLIB=OFF \
+    -DBUILD_ZLIB=ON \
     -DBUILD_JASPER=ON \
     -DBUILD_OPENEXR=ON \
-    -DFFMPEG_INCLUDE_DIRS=$OUT_DIR/include \
-    -DFFMPEG_LIBRARY_DIRS=$OUT_DIR/lib \
     -DCMAKE_PREFIX_PATH=/usr/local \
     -DCMAKE_INSTALL_PREFIX=/usr/local \
     -DOPENCV_EXTRA_MODULES_PATH=$BLD_BASE/src/opencv_contrib/modules \
-    .
+    $SRC_DIR
 
 make $MAKE_OPTS
 make install DESTDIR=./_install
