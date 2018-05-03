@@ -1,0 +1,35 @@
+---
+format: hypermake.v0
+
+targets:
+  get-sphinx:
+    description: download sphinx library
+    after:
+      - toolchain
+    watches:
+      - functions.sh
+      - sphinx.get.sh
+    cmds:
+      - ./sphinx.get.sh
+
+  get-sphinx-lang-[lang:en,zh]:
+    description: download sphinx language model $[lang]
+    after:
+      - toolchain
+    watches:
+      - functions.sh
+      - sphinx.get.sh
+    cmds:
+      - ./sphinx.get.sh model $[lang]
+
+  build-dep-sphinx-[arch:amd64,armhf]:
+    description: build sphinx library
+    after:
+      - get-sphinx
+    watches:
+      - functions.sh
+      - sphinx.build.sh
+    env:
+      - MAKE_OPTS
+    cmds:
+      - ./sphinx.build.sh $[arch]

@@ -2,7 +2,7 @@
 
 test -n "$DEP_MODULE"
 
-ARCH=$1
+test -n "$ARCH" || ARCH=$1
 test -n "$ARCH"
 
 DEP_DIR=$(pwd)
