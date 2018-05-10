@@ -18,12 +18,40 @@ targets:
     after:
       - 'build-dep-*'
 
+  build-prebuilt-prepare:
+    description: prepare for building image with prebuilt binaries
+    watches:
+      - docker/Dockerfile
+    cmds:
+      - mkdir -p out
+      - cp -f docker/Dockerfile out/
+    artifacts:
+      - out/Dockerfile
+
+  build-prebuilt:
+    description: build docker image with prebuilt images
+    after:
+      - build-prebuilt-prepare
+      - 'build-dep-gflags-*'
+      - 'build-dep-glog-*'
+      - 'build-dep-googletest-*'
+      - 'build-dep-boost-*'
+      - 'build-dep-cpp-netlib-*'
+      - 'build-dep-ffmpeg-*'
+      - 'build-dep-opencv-*'
+      - 'build-dep-sphinx-*'
+      - 'build-dep-ncsdk-*'
+      - 'build-dep-nlohmann-json'
+      - 'build-dep-cxxopts'
+    build: out
+    image: 'robotalks/toolchain-prebuilt:stretch-0'
+
 includes:
   - '**/**/*.hmake'
 
 settings:
   default-targets:
-    - build-deps
+    - build-prebuilt
   exec-target: exec
   exec-shell: /bin/bash
   docker:
