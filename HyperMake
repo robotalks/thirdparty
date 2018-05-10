@@ -41,6 +41,7 @@ targets:
       - 'build-dep-ffmpeg-*'
       - 'build-dep-opencv-*'
       - 'build-dep-sphinx-*'
+      - 'build-dep-flite-*'
       - 'build-dep-ncsdk-*'
       - 'build-dep-nlohmann-json'
       - 'build-dep-cxxopts'

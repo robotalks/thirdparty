@@ -1,0 +1,22 @@
+---
+format: hypermake.v0
+
+targets:
+  get-flite:
+    description: download flite source
+    after:
+      - toolchain
+    cmds:
+      - unpack-url.sh flite http://www.festvox.org/flite/packed/flite-2.1/flite-2.1-release.tar.bz2
+
+  build-dep-flite-[arch:amd64,armhf]:
+    description: build flite
+    after:
+      - get-flite
+    watches:
+      - functions.sh
+      - flite.build.sh
+    env:
+      - MAKE_OPTS
+    cmds:
+      - ./flite.build.sh $[arch]
