@@ -22,11 +22,12 @@ targets:
     description: prepare for building image with prebuilt binaries
     watches:
       - docker/Dockerfile
+      - docker/kit
     cmds:
-      - mkdir -p out
-      - cp -f docker/Dockerfile out/
-    artifacts:
-      - out/Dockerfile
+      - 'mkdir -p out'
+      - 'rm -fr out/kit'
+      - 'cp -f docker/Dockerfile out/'
+      - 'cp -rf docker/kit out/'
 
   build-prebuilt:
     description: build docker image with prebuilt images
@@ -45,6 +46,7 @@ targets:
       - 'build-dep-cxxopts'
     build: out
     image: 'robotalks/toolchain-prebuilt:stretch-0'
+    cache: false
 
 includes:
   - '**/**/*.hmake'
