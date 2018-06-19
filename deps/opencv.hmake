@@ -20,6 +20,9 @@ targets:
     description: build opencv library
     after:
       - build-dep-ffmpeg-$[arch]
+      - build-dep-gflags-$[arch]
+      - build-dep-glog-$[arch]
+      - build-dep-eigen
       - get-opencv
       - get-opencv-contrib
     watches:

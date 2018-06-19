@@ -1,0 +1,20 @@
+---
+format: hypermake.v0
+
+targets:
+  get-eigen:
+    description: download eigen library
+    after:
+      - toolchain
+    cmds:
+      - unpack-url.sh eigen http://bitbucket.org/eigen/eigen/get/3.3.4.tar.bz2
+
+  build-dep-eigen:
+    description: build eigen library
+    after:
+      - get-eigen
+    watches:
+      - functions.sh
+      - eigen.build.sh
+    cmds:
+      - ./eigen.build.sh noarch
