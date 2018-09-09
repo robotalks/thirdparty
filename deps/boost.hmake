@@ -7,7 +7,7 @@ targets:
     after:
       - toolchain
     cmds:
-      - unpack-url.sh boost https://sourceforge.net/projects/boost/files/boost/1.67.0/boost_1_67_0.tar.bz2
+      - unpack-url.sh boost https://sourceforge.net/projects/boost/files/boost/1.68.0/boost_1_68_0.tar.bz2
 
   build-dep-boost-[arch:amd64,armhf]:
     description: build boost library

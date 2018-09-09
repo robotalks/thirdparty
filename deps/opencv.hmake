@@ -7,14 +7,14 @@ targets:
     after:
       - toolchain
     cmds:
-      - unpack-url.sh opencv https://github.com/opencv/opencv/archive/3.4.1.tar.gz
+      - unpack-url.sh opencv https://github.com/opencv/opencv/archive/3.4.3.tar.gz
 
   get-opencv-contrib:
     description: download opencv extra modules
     after:
       - toolchain
     cmds:
-      - unpack-url.sh opencv_contrib https://github.com/opencv/opencv_contrib/archive/3.4.1.tar.gz
+      - unpack-url.sh opencv_contrib https://github.com/opencv/opencv_contrib/archive/3.4.3.tar.gz
 
   build-dep-opencv-[arch:amd64,armhf]:
     description: build opencv library

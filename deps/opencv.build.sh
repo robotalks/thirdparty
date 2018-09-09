@@ -59,3 +59,6 @@ make install DESTDIR=./_install
 
 mkdir -p $OUT_DIR
 cp -rf _install/usr/local/* $OUT_DIR/
+
+# remove path prefix of libglog.a and libgflags.a
+sed -i -r "s!(;|\").+/$ARCH/lib/!\\1!g" $OUT_DIR/share/OpenCV/OpenCVModules.cmake
